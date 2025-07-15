@@ -1,4 +1,4 @@
-#CLIPcherry Technology Stack
+CLIPcherry Technology Stack
 
 CLIPcherry is built on a modern, edge-first architecture that leverages cloud-based serverless services and blockchain technology. This stack ensures global performance, high scalability, and secure crypto transactions without the need for traditional servers.
 Cloudflare Workers (Edge Runtime)
@@ -12,7 +12,7 @@ Cloudflare KV: A key-value storage used for caching and configuration. The KV st
 Both D1 and KV are fully serverless and replicated globally, ensuring data durability and quick access from anywhere.
 Media Services (Images and Video)
 
-#Handling user-generated media is a critical part of CLIPcherry’s stack:
+Handling user-generated media is a critical part of CLIPcherry’s stack:
 Cloudflare Images: All creator-uploaded images (including photos or thumbnails) are stored and delivered via Cloudflare’s Images service. When a creator uploads an image, the platform uses the Cloudflare Images API to securely store it, returning a unique image ID (for example, the CLIPcherry logo is stored this way). Cloudflare Images automatically handles image optimization, resizing, and global CDN delivery. This ensures that supporters loading an image (like a photo for sale) get a fast-loading, properly scaled version from a server nearest to them.
 Cloudflare Stream: Video content is managed through Cloudflare Stream. Creators’ videos are uploaded to Stream via API, where they are encoded and stored. Stream provides adaptive bitrate streaming, so supporters can watch purchased videos smoothly on any device and connection quality. The videos are delivered securely and efficiently through Cloudflare’s network without the creators or platform needing to manage video servers or bandwidth.
 Using these media services offloads heavy image and video handling to Cloudflare’s infrastructure. Notably, CLIPcherry implements image blurring for previews — for example, a creator’s images are automatically blurred (e.g., an 8 px radius blur) until a purchase is made. This is achieved either by storing a blurred preview variant or by applying a blur filter in the front-end, ensuring that full-quality content is only visible to paying supporters.
