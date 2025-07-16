@@ -1,18 +1,3 @@
-Great. I’ll create a single, comprehensive README.md file that includes all architecture, system design, Cloudflare integrations, and project flow from start to finish for CLIPcherry. I’ll also finalize and push it directly to your GitHub repo `carbidethegreate/clipcherry`.
-
-This file will cover:
-
-* All platform components using Cloudflare stack (Workers, D1, KV, R2, Images, Stream, AI, etc.)
-* Crypto purchase flow (BTC, XRP)
-* Age verification pipeline with Workers AI or external OCR
-* Full content access and protection strategy
-* Global scalability and CDN delivery
-* Security and compliance design
-* Project setup and Codex task flow
-
-I’ll update you once it has been uploaded to GitHub.
-
-
 # CLIPcherry Platform Technical Architecture
 
 ## Overview
