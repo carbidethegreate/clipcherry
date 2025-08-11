@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creator.html">Creator Portal</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+    <div style="display: flex; align-items: center; gap: calc(var(--spacing) * 1.5);">
+      <span style="font-size: 0.9rem;">Hello, Jane Doe</span>
+      <img src="https://picsum.photos/seed/useravatar/48" alt="User avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
+    </div>
+  </header>
+  <main class="container">
+    <h1>My Dashboard</h1>
+    <p>Here’s what’s new from the creators you support and other content you might like.</p>
+    <section style="margin-top: calc(var(--spacing) * 4);">
+      <h2>My Subscriptions</h2>
+      <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+        <!-- Example subscription card: show creator avatar, name, and subscription status -->
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/subcreator1/480/270" alt="Creator banner">
+          <h3>Creator A</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 0;">Subscribed – $9.99/month</p>
+          <button class="btn btn-secondary" style="margin-top: calc(var(--spacing) * 1);">Unsubscribe</button>
+        </div>
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/subcreator2/480/270" alt="Creator banner">
+          <h3>Creator B</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 0;">Subscribed – Free</p>
+          <button class="btn btn-secondary" style="margin-top: calc(var(--spacing) * 1);">Unsubscribe</button>
+        </div>
+      </div>
+    </section>
+    <section style="margin-top: calc(var(--spacing) * 6);">
+      <h2>My Feed</h2>
+      <p style="color: var(--text-secondary);">Content from your subscribed creators</p>
+      <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+        <!-- Example unlocked content (user is subscribed) -->
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/feed1/480/270" alt="Feed content" style="filter: none;">
+          <h3>Creator A – Exclusive Photo</h3>
+          <span class="price-tag">Included</span>
+          <button class="btn btn-secondary">View</button>
+        </div>
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/feed2/480/270" alt="Feed content" style="filter: none;">
+          <h3>Creator B – Private Video</h3>
+          <span class="price-tag">Included</span>
+          <button class="btn btn-secondary">Watch</button>
+        </div>
+      </div>
+    </section>
+    <section style="margin-top: calc(var(--spacing) * 6);">
+      <h2>Explore More</h2>
+      <p style="color: var(--text-secondary);">Discover content from other creators</p>
+      <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+        <!-- Example content from non-subscribed creators (blurred) -->
+        <div class="content-card locked">
+          <img src="https://picsum.photos/seed/explore1/480/270" alt="Explore content">
+          <div class="locked-overlay">Locked</div>
+          <h3>Creator C – Premium Video</h3>
+          <span class="price-tag">$6.99</span>
+          <button class="btn btn-primary">Subscribe to Unlock</button>
+        </div>
+        <div class="content-card locked">
+          <img src="https://picsum.photos/seed/explore2/480/270" alt="Explore content">
+          <div class="locked-overlay">Locked</div>
+          <h3>Creator D – Private Gallery</h3>
+          <span class="price-tag">$12.00</span>
+          <button class="btn btn-primary">Subscribe to Unlock</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

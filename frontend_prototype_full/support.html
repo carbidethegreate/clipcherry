@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Support & Help</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Support & Help</h1>
+    <p>Find answers to common questions or submit a support request.</p>
+    <section style="margin-top: calc(var(--spacing) * 3);">
+      <h2>Frequently Asked Questions</h2>
+      <ul style="margin-top: calc(var(--spacing) * 2); list-style: none; padding: 0; display: flex; flex-direction: column; gap: calc(var(--spacing) * 2);">
+        <li>
+          <strong>How do I reset my password?</strong>
+          <p style="color: var(--text-secondary);">Go to the login page and click on “Forgot Password”; we will send a reset link to your email.</p>
+        </li>
+        <li>
+          <strong>How do I become a creator?</strong>
+          <p style="color: var(--text-secondary);">Visit the Creator Portal, enter your user ID and follow the prompts to activate creator mode.</p>
+        </li>
+        <li>
+          <strong>Where can I check my age verification status?</strong>
+          <p style="color: var(--text-secondary);">After signing up, visit the Verification Status page (linked from your dashboard) to see whether your ID has been verified.</p>
+        </li>
+        <li>
+          <strong>How are payments handled?</strong>
+          <p style="color: var(--text-secondary);">Payments are processed directly on the blockchain; we never store your funds and unlock content once your transaction is confirmed.</p>
+        </li>
+      </ul>
+    </section>
+    <section style="margin-top: calc(var(--spacing) * 5); max-width: 600px;">
+      <h2>Contact Us</h2>
+      <p>If you can’t find what you’re looking for, send us a message. We’ll respond as soon as possible.</p>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label for="support-name">Name</label>
+          <input type="text" id="support-name" class="form-control" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="support-email">Email</label>
+          <input type="email" id="support-email" class="form-control" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="support-message">Message</label>
+          <textarea id="support-message" class="form-control" placeholder="How can we help you?" rows="4" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

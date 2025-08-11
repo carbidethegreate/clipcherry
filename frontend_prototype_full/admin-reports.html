@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry Admin – Reports</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-users.html">Users</a></li>
+        <li><a href="admin-creators.html">Creators</a></li>
+        <li><a href="admin-content.html">Content</a></li>
+        <li><a href="admin-transactions.html">Transactions</a></li>
+        <li><a href="admin-reports.html" class="active">Reports</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Reports & Moderation</h1>
+    <p>Handle flagged content, user complaints and moderation tasks.</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Report ID</th>
+          <th>Date</th>
+          <th>Reporter</th>
+          <th>Subject</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#R-0001</td>
+          <td>2025‑08‑10</td>
+          <td>userD</td>
+          <td>Content: Summer Set</td>
+          <td>Inappropriate content</td>
+          <td>Open</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-secondary">View</button>
+              <button class="btn btn-secondary">Dismiss</button>
+              <button class="btn btn-secondary">Delete Content</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>#R-0002</td>
+          <td>2025‑08‑08</td>
+          <td>creatorB</td>
+          <td>User: userC</td>
+          <td>Harassment in messages</td>
+          <td>In Review</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-secondary">View</button>
+              <button class="btn btn-secondary">Suspend User</button>
+              <button class="btn btn-secondary">Mark Resolved</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

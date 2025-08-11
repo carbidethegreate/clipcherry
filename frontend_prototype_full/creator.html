@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Creator Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#previews">Explore</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Creator Portal</h1>
+    <p>Share your original content and earn crypto instantly. Use this portal to become a creator and upload new photos or videos.</p>
+    <section class="creator-onboard">
+      <h2>Become a Creator</h2>
+      <p>Already a user? Enter your user ID to start uploading content.</p>
+      <div class="form-group">
+        <label for="creator-id">Your user ID</label>
+        <input id="creator-id" type="text" class="form-control" placeholder="User ID" required>
+      </div>
+      <button class="btn btn-primary" type="button">Activate Creator</button>
+    </section>
+    <section class="creator-upload" style="margin-top: calc(var(--spacing) * 6);">
+      <h2>Upload New Content</h2>
+      <form onsubmit="return false;" style="margin-top: calc(var(--spacing) * 2); max-width: 600px;">
+        <div class="form-group">
+          <label for="cr-title">Title</label>
+          <input type="text" id="cr-title" class="form-control" placeholder="Content title" required>
+        </div>
+        <div class="form-group">
+          <label for="cr-description">Description</label>
+          <textarea id="cr-description" class="form-control" placeholder="Brief description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="cr-price">Price (USD)</label>
+          <input type="number" id="cr-price" class="form-control" step="0.01" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="cr-type">Type</label>
+          <select id="cr-type" class="form-control">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cr-file">Select File</label>
+          <input type="file" id="cr-file" class="form-control" accept="image/*,video/*" required>
+        </div>
+        <div class="form-group">
+          <label for="cr-preview-image">Preview Image (optional)</label>
+          <input type="file" id="cr-preview-image" class="form-control" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label for="cr-preview-video">Preview Video (optional)</label>
+          <input type="file" id="cr-preview-video" class="form-control" accept="video/*">
+        </div>
+        <div class="form-group" style="flex-direction: row; align-items: center; gap: calc(var(--spacing) * 1);">
+          <input type="checkbox" id="cr-autopreview" style="width: auto;">
+          <label for="cr-autopreview">Generate preview automatically</label>
+        </div>
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </form>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

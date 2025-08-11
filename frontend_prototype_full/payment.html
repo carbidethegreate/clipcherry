@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Payment</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Complete Your Purchase</h1>
+    <p>Please select your preferred cryptocurrency and follow the instructions below to unlock this content.</p>
+    <section style="margin-top: calc(var(--spacing) * 3); max-width: 600px;">
+      <div class="form-group">
+        <label for="pay-currency">Choose currency</label>
+        <select id="pay-currency" class="form-control">
+          <option value="btc">Bitcoin (BTC)</option>
+          <option value="xrp">XRP</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <p style="font-weight: 600; color: var(--color-cherry); margin: 0;">$8.99 &nbsp; (~0.00020 BTC)</p>
+      </div>
+      <div class="form-group">
+        <label>Deposit Address</label>
+        <div style="display: flex; align-items: center; gap: calc(var(--spacing) * 1);">
+          <input type="text" id="crypto-address" class="form-control" value="1ABCxyz123Example" readonly>
+          <button class="btn btn-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('crypto-address').value)">Copy</button>
+        </div>
+        <small style="color: var(--text-secondary);">Send exactly 0.00020 BTC to this address.</small>
+      </div>
+      <div class="form-group">
+        <label>QR Code</label>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:1ABCxyz123Example?amount=0.00020" alt="QR Code" style="width: 200px; height: 200px; border-radius: var(--radius);">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <p style="color: var(--color-warning); font-weight: 600; margin: 0;">Awaiting payment...</p>
+        <small style="color: var(--text-secondary);">Your content will unlock automatically once the payment is confirmed.</small>
+      </div>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry Admin – Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-users.html">Users</a></li>
+        <li><a href="admin-creators.html">Creators</a></li>
+        <li><a href="admin-content.html">Content</a></li>
+        <li><a href="admin-transactions.html">Transactions</a></li>
+        <li><a href="admin-reports.html">Reports</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Overview of key metrics and quick links for platform administration.</p>
+    <div class="features" style="margin-top: calc(var(--spacing) * 4);">
+      <div class="feature-card">
+        <h3>Total Users</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-cherry);">12,345</p>
+      </div>
+      <div class="feature-card">
+        <h3>Age Verified</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-success);">11,000</p>
+      </div>
+      <div class="feature-card">
+        <h3>Active Creators</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-accent);">480</p>
+      </div>
+      <div class="feature-card">
+        <h3>Total Revenue</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-cherry);">$95,000</p>
+      </div>
+      <div class="feature-card">
+        <h3>Pending Payouts</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-warning);">$4,300</p>
+      </div>
+      <div class="feature-card">
+        <h3>Flagged Reports</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-error);">7</p>
+      </div>
+    </div>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

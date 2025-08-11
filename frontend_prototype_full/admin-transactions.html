@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry Admin – Transactions</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-users.html">Users</a></li>
+        <li><a href="admin-creators.html">Creators</a></li>
+        <li><a href="admin-content.html">Content</a></li>
+        <li><a href="admin-transactions.html" class="active">Transactions</a></li>
+        <li><a href="admin-reports.html">Reports</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Transaction History</h1>
+    <p>Monitor purchases and payouts across the platform.</p>
+    <div style="margin-top: calc(var(--spacing) * 3); display: flex; gap: calc(var(--spacing) * 1); align-items: center;">
+      <input type="text" class="form-control" placeholder="Search transactions..." style="flex: 1;">
+      <select class="form-control" style="max-width: 200px;">
+        <option value="all">All</option>
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tx ID</th>
+          <th>Date</th>
+          <th>User</th>
+          <th>Content</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#TX-0001</td>
+          <td>2025‑08‑10</td>
+          <td>userA</td>
+          <td>Summer Set</td>
+          <td>$5.99</td>
+          <td>BTC</td>
+          <td>Paid</td>
+        </tr>
+        <tr>
+          <td>#TX-0002</td>
+          <td>2025‑08‑09</td>
+          <td>userC</td>
+          <td>New Video</td>
+          <td>$9.99</td>
+          <td>XRP</td>
+          <td>Pending</td>
+        </tr>
+        <tr>
+          <td>#TX-0003</td>
+          <td>2025‑08‑09</td>
+          <td>creatorB</td>
+          <td>Free Photo Pack</td>
+          <td>$0.00</td>
+          <td>USD</td>
+          <td>Paid</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

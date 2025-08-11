@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry Admin – Users</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-users.html" class="active">Users</a></li>
+        <li><a href="admin-creators.html">Creators</a></li>
+        <li><a href="admin-content.html">Content</a></li>
+        <li><a href="admin-transactions.html">Transactions</a></li>
+        <li><a href="admin-reports.html">Reports</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>User Management</h1>
+    <p>View and manage all users registered on CLIPcherry.</p>
+    <div style="margin-top: calc(var(--spacing) * 3); display: flex; gap: calc(var(--spacing) * 1); align-items: center;">
+      <input type="text" class="form-control" placeholder="Search users..." style="flex: 1;">
+      <select class="form-control" style="max-width: 200px;">
+        <option value="all">All</option>
+        <option value="verified">Age Verified</option>
+        <option value="unverified">Not Verified</option>
+        <option value="creators">Creators</option>
+      </select>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Age Verified</th>
+          <th>Creator</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#1001</td>
+          <td>userA</td>
+          <td>usera@example.com</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Active</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-secondary">View</button>
+              <button class="btn btn-secondary">Ban</button>
+              <button class="btn btn-secondary">Delete</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>#1002</td>
+          <td>creatorB</td>
+          <td>creatorb@example.com</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Active</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-secondary">View</button>
+              <button class="btn btn-secondary">Ban</button>
+              <button class="btn btn-secondary">Delete</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>#1003</td>
+          <td>userC</td>
+          <td>userc@example.com</td>
+          <td>No</td>
+          <td>No</td>
+          <td>Suspended</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-secondary">View</button>
+              <button class="btn btn-secondary">Unban</button>
+              <button class="btn btn-secondary">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Creator Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creator.html">Creator Portal</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <div style="display: flex; gap: calc(var(--spacing) * 4); margin-top: calc(var(--spacing) * 4); flex-wrap: wrap;">
+      <div style="flex: 1 1 300px;">
+        <img src="https://picsum.photos/seed/profilehero/600/400" alt="Creator portrait" style="width: 100%; border-radius: var(--radius);">
+        <h1 style="margin-top: calc(var(--spacing) * 2);">Creator A</h1>
+        <p style="color: var(--text-secondary);">Professional model and content creator</p>
+        <p style="margin-top: calc(var(--spacing) * 2);">Subscription Price: <span style="color: var(--color-cherry); font-weight: 600;">$9.99/month</span></p>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-primary">Subscribe</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator A">Message</button>
+        </div>
+      </div>
+      <div style="flex: 1 1 300px;">
+        <h2>Bio</h2>
+        <p>Learn more about this creator and their stats.</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li><strong>Age:</strong> 25 years</li>
+          <li><strong>Height:</strong> 5'7" (170cm)</li>
+          <li><strong>Weight:</strong> 120 lbs (54kg)</li>
+          <li><strong>Body Type:</strong> Athletic</li>
+          <li><strong>Gender:</strong> Female</li>
+          <li><strong>Shoe Size:</strong> 8 US</li>
+          <li><strong>Hair Color:</strong> Brown</li>
+          <li><strong>Eye Color:</strong> Hazel</li>
+        </ul>
+        <h3 style="margin-top: calc(var(--spacing) * 4);">About Me</h3>
+        <p>Hi there! I'm Creator A, a professional model and content creator based in Los Angeles. I love sharing behind‑the‑scenes photos and videos of my daily life, workout routines, and special photoshoots. When I'm not in front of the camera, I'm exploring new places or hanging out with my pet. Subscribe to my private gallery for exclusive content and feel free to chat with me!</p>
+      </div>
+    </div>
+    <section style="margin-top: calc(var(--spacing) * 6);">
+      <h2>Public Gallery</h2>
+      <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/profilepub1/480/270" alt="Public content">
+          <img class="thumb-preview" src="https://picsum.photos/seed/profilethumb1/480/60" alt="Static preview">
+          <h3>Public Set 1</h3>
+          <span class="price-tag">$5.00</span>
+          <button class="btn btn-primary">Unlock</button>
+        </div>
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/profilepub2/480/270" alt="Public content">
+          <img class="thumb-preview" src="https://picsum.photos/seed/profilethumb2/480/60" alt="Static preview">
+          <h3>Public Video Preview</h3>
+          <span class="price-tag">$7.50</span>
+          <button class="btn btn-primary">Unlock</button>
+        </div>
+      </div>
+    </section>
+    <section style="margin-top: calc(var(--spacing) * 6);">
+      <h2>Private Gallery</h2>
+      <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+        <div class="content-card locked">
+          <img src="https://picsum.photos/seed/profilepriv1/480/270" alt="Private content">
+          <img class="thumb-preview" src="https://picsum.photos/seed/profileprivthumb1/480/60" alt="Static preview">
+          <div class="locked-overlay">Locked</div>
+          <h3>Exclusive Photo Set</h3>
+          <span class="price-tag">$10.00</span>
+          <button class="btn btn-primary">Subscribe to Unlock</button>
+        </div>
+        <div class="content-card locked">
+          <img src="https://picsum.photos/seed/profilepriv2/480/270" alt="Private content">
+          <img class="thumb-preview" src="https://picsum.photos/seed/profileprivthumb2/480/60" alt="Static preview">
+          <div class="locked-overlay">Locked</div>
+          <h3>Premium Video</h3>
+          <span class="price-tag">$12.00</span>
+          <button class="btn btn-primary">Subscribe to Unlock</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Chat Panel for profile page -->
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-header">
+      <h3 id="chat-title">Chat</h3>
+      <button id="chat-close" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-primary);">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message creator">Welcome to my chat!</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chat-input-field" placeholder="Type your message...">
+      <button class="send-btn" id="send-btn">Send</button>
+      <button class="tip-btn" id="tip-btn">Tip</button>
+    </div>
+  </div>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Messages</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creator.html">Creator Portal</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Messages</h1>
+    <p>Chat with the creators you support. Click on a creator to open the conversation.</p>
+    <div style="margin-top: calc(var(--spacing) * 3); display: flex; gap: calc(var(--spacing) * 1); align-items: center;">
+      <label for="sort-messages">Sort by:</label>
+      <select id="sort-messages">
+        <option value="unread">Unread First</option>
+        <option value="name">Creator Name</option>
+      </select>
+    </div>
+    <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/msg1/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/msgthumb1/480/60" alt="Static preview">
+        <div class="creator-info">
+          <div class="avatar-wrapper">
+            <img class="avatar" src="https://picsum.photos/seed/avatarmsg1/100" alt="Creator A profile">
+            <span class="badge">2</span>
+          </div>
+          <span>Creator A</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: var(--font-size-small); margin-top: calc(var(--spacing) * 1);">Creator: Hey, are you enjoying the latest set?</p>
+        <button class="btn btn-secondary chat-btn" data-creator="Creator A" style="margin-top: calc(var(--spacing) * 1);">Chat</button>
+      </div>
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/msg2/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/msgthumb2/480/60" alt="Static preview">
+        <div class="creator-info">
+          <div class="avatar-wrapper">
+            <img class="avatar" src="https://picsum.photos/seed/avatarmsg2/100" alt="Creator B profile">
+            <span class="badge">0</span>
+          </div>
+          <span>Creator B</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: var(--font-size-small); margin-top: calc(var(--spacing) * 1);">Creator: Don't forget to check out my free content!</p>
+        <button class="btn btn-secondary chat-btn" data-creator="Creator B" style="margin-top: calc(var(--spacing) * 1);">Chat</button>
+      </div>
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/msg3/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/msgthumb3/480/60" alt="Static preview">
+        <div class="creator-info">
+          <div class="avatar-wrapper">
+            <img class="avatar" src="https://picsum.photos/seed/avatarmsg3/100" alt="Creator C profile">
+            <span class="badge">1</span>
+          </div>
+          <span>Creator C</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: var(--font-size-small); margin-top: calc(var(--spacing) * 1);">Creator: New video dropping tomorrow!</p>
+        <button class="btn btn-secondary chat-btn" data-creator="Creator C" style="margin-top: calc(var(--spacing) * 1);">Chat</button>
+      </div>
+    </div>
+  </main>
+  <!-- Chat Panel (same structure as gallery) -->
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-header">
+      <h3 id="chat-title">Chat</h3>
+      <button id="chat-close" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-primary);">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message creator">Welcome to the chat!</div>
+      <div class="message promotion">
+        <h4>New Premium Set Available!</h4>
+        <img src="https://picsum.photos/seed/promo1/400/240" alt="Promotion preview">
+        <p>Unlock my latest photo set now.</p>
+        <button class="btn btn-primary">Unlock for $8.99</button>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chat-input-field" placeholder="Type your message...">
+      <button class="send-btn" id="send-btn">Send</button>
+      <button class="tip-btn" id="tip-btn">Tip</button>
+    </div>
+  </div>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

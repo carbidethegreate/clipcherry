@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Verification Status</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Age Verification Status</h1>
+    <p>Check your verification status and upload a new ID if needed.</p>
+    <section style="margin-top: calc(var(--spacing) * 3); max-width: 640px;">
+      <div class="feature-card" style="display: flex; align-items: center; gap: calc(var(--spacing) * 2);">
+        <div style="flex: 1;">
+          <h3>Status</h3>
+          <p style="font-size: 1.5rem; font-weight: 700; color: var(--color-warning);">Pending</p>
+          <p style="color: var(--text-secondary);">Your ID is being reviewed. You will be notified once verification is complete. This usually takes just a few minutes.</p>
+        </div>
+        <div>
+          <img src="https://picsum.photos/seed/idstatus/200/120" alt="Verification illustration" style="border-radius: var(--radius);">
+        </div>
+      </div>
+      <div class="form-group" style="margin-top: calc(var(--spacing) * 4);">
+        <label for="new-id-upload">Upload a new ID (if requested)</label>
+        <input type="file" id="new-id-upload" class="form-control" accept="image/*">
+      </div>
+      <button class="btn btn-primary" type="button">Submit New ID</button>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

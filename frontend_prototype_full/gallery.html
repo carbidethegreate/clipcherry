@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Gallery</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#previews">Explore</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Gallery</h1>
+    <p>Browse all content, filter by your favourite creators, or view work from those you support. Locked items require a subscription to access.</p>
+    <div class="filter-bar">
+      <label for="filter-type">View:</label>
+      <select id="filter-type">
+        <option>All Content</option>
+        <option>Everyone I Support</option>
+        <option>By Creator</option>
+      </select>
+      <label for="creator-select">Creator:</label>
+      <select id="creator-select">
+        <option>All Creators</option>
+        <option>Creator A</option>
+        <option>Creator B</option>
+        <option>Creator C</option>
+      </select>
+    </div>
+    <div class="preview-grid">
+      <!-- Example unlocked content card -->
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/gallery1/480/270" alt="Sample content">
+        <img class="thumb-preview" src="https://picsum.photos/seed/thumb1/480/60" alt="Static preview">
+        <h3>Creator A – Teaser Image</h3>
+        <span class="price-tag">$5.00</span>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-secondary preview-btn" data-title="Teaser Image" data-creator="Creator A" data-price="$5.00" data-image="https://picsum.photos/seed/gallery1/960/540">Preview</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator A">Message</button>
+        </div>
+      </div>
+      <!-- Example locked content card (private gallery) -->
+      <div class="content-card locked">
+        <img src="https://picsum.photos/seed/gallery2/480/270" alt="Private content">
+        <img class="thumb-preview" src="https://picsum.photos/seed/thumb2/480/60" alt="Static preview">
+        <div class="locked-overlay">Locked</div>
+        <h3>Creator B – Private Video</h3>
+        <span class="price-tag">$9.99</span>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-secondary preview-btn" data-title="Private Video" data-creator="Creator B" data-price="$9.99" data-image="https://picsum.photos/seed/gallery2/960/540">Preview</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator B">Message</button>
+        </div>
+      </div>
+      <!-- Another example card -->
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/gallery3/480/270" alt="Sample content">
+        <img class="thumb-preview" src="https://picsum.photos/seed/thumb3/480/60" alt="Static preview">
+        <h3>Creator C – Public Photo</h3>
+        <span class="price-tag">$0.00</span>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-secondary preview-btn" data-title="Public Photo" data-creator="Creator C" data-price="$0.00" data-image="https://picsum.photos/seed/gallery3/960/540">Preview</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator C">Message</button>
+        </div>
+      </div>
+      <div class="content-card locked">
+        <img src="https://picsum.photos/seed/gallery4/480/270" alt="Private content">
+        <img class="thumb-preview" src="https://picsum.photos/seed/thumb4/480/60" alt="Static preview">
+        <div class="locked-overlay">Locked</div>
+        <h3>Creator A – Premium Set</h3>
+        <span class="price-tag">$14.99</span>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-secondary preview-btn" data-title="Premium Set" data-creator="Creator A" data-price="$14.99" data-image="https://picsum.photos/seed/gallery4/960/540">Preview</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator A">Message</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Preview Modal -->
+  <div id="preview-modal" class="modal-overlay">
+    <div class="modal">
+      <button class="close-btn" id="preview-close" aria-label="Close">&times;</button>
+      <img id="preview-image" src="" alt="Content preview">
+      <h3 id="preview-title">Content Title</h3>
+      <p id="preview-description">This is a short preview description of the selected content. Actual preview would show a short clip or blurred image.</p>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="unlock-btn">Unlock</button>
+        <button class="btn btn-secondary" id="preview-chat-btn">Message Creator</button>
+      </div>
+    </div>
+  </div>
+  <!-- Chat Panel -->
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-header">
+      <h3 id="chat-title">Chat with Creator</h3>
+      <button id="chat-close" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-primary);">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message creator">Hi there! Thanks for reaching out.</div>
+      <div class="message supporter">Hello! Your content is amazing.</div>
+      <div class="message creator">Glad you like it! Tips are appreciated ❤</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chat-input-field" placeholder="Type your message...">
+      <button class="send-btn" id="send-btn">Send</button>
+      <button class="tip-btn" id="tip-btn">Tip</button>
+    </div>
+  </div>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

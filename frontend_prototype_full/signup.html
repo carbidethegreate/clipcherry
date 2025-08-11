@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#previews">Explore</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Create Your Account</h1>
+    <p>Join CLIPcherry to access and upload premium content. You must verify that you are 18 years or older to use our platform.</p>
+    <form class="signup-form" onsubmit="return false;" style="max-width: 480px;">
+      <div class="form-group">
+        <label for="su-username">Username</label>
+        <input type="text" id="su-username" class="form-control" placeholder="Your username" required>
+      </div>
+      <div class="form-group">
+        <label for="su-email">Email</label>
+        <input type="email" id="su-email" class="form-control" placeholder="your@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="su-password">Password</label>
+        <input type="password" id="su-password" class="form-control" placeholder="Create a password" required>
+      </div>
+      <div class="form-group">
+        <label for="su-id">Upload Government ID</label>
+        <input type="file" id="su-id" class="form-control" accept="image/*" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Sign Up</button>
+      <p style="font-size: var(--font-size-small); margin-top: calc(var(--spacing) * 2);">Already have an account? <a href="login.html" style="color: var(--color-cherry); text-decoration: underline;">Log in</a>.</p>
+    </form>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

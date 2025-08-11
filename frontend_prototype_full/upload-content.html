@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Upload Content</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Upload New Content</h1>
+    <p>Use this form to upload a new photo or video for your supporters. Once submitted, your media will be processed and added to your gallery.</p>
+    <form onsubmit="return false;" style="margin-top: calc(var(--spacing) * 3); max-width: 600px;">
+      <div class="form-group">
+        <label for="upload-title">Title</label>
+        <input type="text" id="upload-title" class="form-control" placeholder="Content title" required>
+      </div>
+      <div class="form-group">
+        <label for="upload-description">Description</label>
+        <textarea id="upload-description" class="form-control" placeholder="Brief description" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="upload-price">Price (USD)</label>
+        <input type="number" id="upload-price" class="form-control" step="0.01" min="0" required>
+      </div>
+      <div class="form-group">
+        <label for="upload-type">Type</label>
+        <select id="upload-type" class="form-control">
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="upload-file">Select File</label>
+        <input type="file" id="upload-file" class="form-control" accept="image/*,video/*" required>
+      </div>
+      <div class="form-group">
+        <label for="upload-preview-image">Preview Image (optional)</label>
+        <input type="file" id="upload-preview-image" class="form-control" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label for="upload-preview-video">Preview Video (optional)</label>
+        <input type="file" id="upload-preview-video" class="form-control" accept="video/*">
+      </div>
+      <div class="form-group" style="flex-direction: row; align-items: center; gap: calc(var(--spacing) * 1);">
+        <input type="checkbox" id="upload-autopreview" style="width: auto;">
+        <label for="upload-autopreview">Generate preview automatically</label>
+      </div>
+      <button class="btn btn-primary" type="submit">Upload</button>
+    </form>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

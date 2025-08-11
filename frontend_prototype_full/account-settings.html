@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Account Settings</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Account Settings</h1>
+    <p>Update your account details and preferences. You can also download or delete your data.</p>
+    <form style="margin-top: calc(var(--spacing) * 3); max-width: 600px;">
+      <div class="form-group">
+        <label for="settings-email">Email</label>
+        <input type="email" id="settings-email" class="form-control" placeholder="your@example.com" value="user@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="settings-username">Username</label>
+        <input type="text" id="settings-username" class="form-control" placeholder="Username" value="user123" required>
+      </div>
+      <div class="form-group">
+        <label for="settings-password">Change Password</label>
+        <input type="password" id="settings-password" class="form-control" placeholder="New password">
+      </div>
+      <div class="form-group">
+        <label for="settings-notify">Email Notifications</label>
+        <select id="settings-notify" class="form-control">
+          <option value="all">All notifications</option>
+          <option value="purchases">Only purchases and subscriptions</option>
+          <option value="none">No emails</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit">Save Changes</button>
+    </form>
+    <section style="margin-top: calc(var(--spacing) * 5); max-width: 600px;">
+      <h2>Privacy & Data</h2>
+      <p>You can download a copy of your personal data or request account deletion.</p>
+      <button class="btn btn-secondary" type="button" style="margin-right: calc(var(--spacing) * 2);">Download My Data</button>
+      <button class="btn btn-secondary" type="button" style="background-color: var(--color-error); color: var(--color-white); border-color: var(--color-error);">Delete My Account</button>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

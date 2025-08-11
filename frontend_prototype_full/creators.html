@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Creators</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creator.html">Creator Portal</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Creators</h1>
+    <p>Browse and search all creators on CLIPcherry. Click on a creator to view their profile and subscribe.</p>
+    <div style="margin-top: calc(var(--spacing) * 3); display: flex; gap: calc(var(--spacing) * 1);">
+      <input type="text" placeholder="Search creators..." style="flex: 1; padding: calc(var(--spacing) * 1.5); border: 2px solid var(--border); border-radius: var(--radius);">
+      <button class="btn btn-secondary" style="padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);">Search</button>
+    </div>
+    <div class="preview-grid" style="margin-top: calc(var(--spacing) * 3);">
+      <!-- Sample creators -->
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/creatorlist1/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/creatorlistthumb1/480/60" alt="Static preview">
+        <div class="creator-info">
+          <img class="avatar" src="https://picsum.photos/seed/creatoravatar1/100" alt="Creator A profile">
+          <span>Creator A</span>
+        </div>
+        <p style="color: var(--text-secondary);">Subscription: $9.99/month</p>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-primary" onclick="location.href='creator-profile.html'">View Profile</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator A">Message</button>
+        </div>
+      </div>
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/creatorlist2/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/creatorlistthumb2/480/60" alt="Static preview">
+        <div class="creator-info">
+          <img class="avatar" src="https://picsum.photos/seed/creatoravatar2/100" alt="Creator B profile">
+          <span>Creator B</span>
+        </div>
+        <p style="color: var(--text-secondary);">Subscription: Free</p>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-primary" onclick="location.href='creator-profile.html'">View Profile</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator B">Message</button>
+        </div>
+      </div>
+      <div class="content-card">
+        <img src="https://picsum.photos/seed/creatorlist3/480/270" alt="Creator banner">
+        <img class="thumb-preview" src="https://picsum.photos/seed/creatorlistthumb3/480/60" alt="Static preview">
+        <div class="creator-info">
+          <img class="avatar" src="https://picsum.photos/seed/creatoravatar3/100" alt="Creator C profile">
+          <span>Creator C</span>
+        </div>
+        <p style="color: var(--text-secondary);">Subscription: $4.99/month</p>
+        <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+          <button class="btn btn-primary" onclick="location.href='creator-profile.html'">View Profile</button>
+          <button class="btn btn-secondary chat-btn" data-creator="Creator C">Message</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

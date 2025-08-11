@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – My Subscriptions</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>My Subscriptions</h1>
+    <p>Manage your active subscriptions and discover new creators to support.</p>
+    <section style="margin-top: calc(var(--spacing) * 3);">
+      <h2>Active Subscriptions</h2>
+      <div class="preview-grid">
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/sub1/480/270" alt="Creator banner">
+          <div class="creator-info">
+            <img class="avatar" src="https://picsum.photos/seed/subavatar1/100" alt="Creator A">
+            <span>Creator A</span>
+          </div>
+          <p style="margin-top: calc(var(--spacing) * 1); font-weight: 600;">$9.99/month • Next bill: 2025‑09‑10</p>
+          <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+            <button class="btn btn-secondary">View Content</button>
+            <button class="btn btn-secondary">Cancel</button>
+          </div>
+        </div>
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/sub2/480/270" alt="Creator banner">
+          <div class="creator-info">
+            <img class="avatar" src="https://picsum.photos/seed/subavatar2/100" alt="Creator B">
+            <span>Creator B</span>
+          </div>
+          <p style="margin-top: calc(var(--spacing) * 1); font-weight: 600;">Free • Expires: Never</p>
+          <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+            <button class="btn btn-secondary">View Content</button>
+            <button class="btn btn-secondary">Unfollow</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section style="margin-top: calc(var(--spacing) * 5);">
+      <h2>Recommended Creators</h2>
+      <div class="preview-grid">
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/recc1/480/270" alt="Creator banner">
+          <div class="creator-info">
+            <img class="avatar" src="https://picsum.photos/seed/reccavatar1/100" alt="Creator X">
+            <span>Creator X</span>
+          </div>
+          <p style="margin-top: calc(var(--spacing) * 1); font-weight: 600;">$7.49/month</p>
+          <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+            <button class="btn btn-primary">Subscribe</button>
+            <button class="btn btn-secondary">View Profile</button>
+          </div>
+        </div>
+        <div class="content-card">
+          <img src="https://picsum.photos/seed/recc2/480/270" alt="Creator banner">
+          <div class="creator-info">
+            <img class="avatar" src="https://picsum.photos/seed/reccavatar2/100" alt="Creator Y">
+            <span>Creator Y</span>
+          </div>
+          <p style="margin-top: calc(var(--spacing) * 1); font-weight: 600;">$5.00/month</p>
+          <div style="display: flex; gap: calc(var(--spacing) * 1); margin-top: calc(var(--spacing) * 1);">
+            <button class="btn btn-primary">Subscribe</button>
+            <button class="btn btn-secondary">View Profile</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>

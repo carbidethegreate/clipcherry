@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIPcherry – Creator Analytics</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="container">
+    <a href="index.html" class="logo">CLIPcherry</a>
+    <nav>
+      <ul>
+        <li><a href="creator.html">Creator Portal</a></li>
+        <li><a href="wallet.html">Earnings</a></li>
+        <li><a href="messages.html">Messages</a></li>
+        <li><button id="theme-btn" type="button">Toggle Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Your Analytics</h1>
+    <p>Track views, purchases and subscribers for your content.</p>
+    <div class="features" style="margin-top: calc(var(--spacing) * 4);">
+      <div class="feature-card">
+        <h3>Total Views</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-accent);">23,400</p>
+      </div>
+      <div class="feature-card">
+        <h3>Purchases</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-cherry);">1,150</p>
+      </div>
+      <div class="feature-card">
+        <h3>Subscribers</h3>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--color-success);">320</p>
+      </div>
+    </div>
+    <section style="margin-top: calc(var(--spacing) * 5);">
+      <h2>Performance by Content</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Views</th>
+            <th>Purchases</th>
+            <th>Likes</th>
+            <th>Conversion Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Summer Set</td>
+            <td>5,200</td>
+            <td>200</td>
+            <td>180</td>
+            <td>3.8%</td>
+          </tr>
+          <tr>
+            <td>Free Photo Pack</td>
+            <td>12,000</td>
+            <td>0</td>
+            <td>960</td>
+            <td>–</td>
+          </tr>
+          <tr>
+            <td>New Video</td>
+            <td>6,200</td>
+            <td>950</td>
+            <td>640</td>
+            <td>15.3%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; <span id="year"></span> CLIPcherry. All rights reserved.</p>
+  </footer>
+</body>
+</html>
