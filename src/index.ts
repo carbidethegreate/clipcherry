@@ -1,8 +1,27 @@
+const COMING_SOON_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CLIPcherry - Coming Soon</title>
+</head>
+<body>
+  <h1>Coming Soon</h1>
+</body>
+</html>`;
+
 export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
+    // Serve the Coming Soon page for the root path
+    if (pathname === "/" || pathname === "") {
+      return new Response(COMING_SOON_HTML, {
+        headers: { "Content-Type": "text/html; charset=UTF-8" },
+      });
+    }
+
+    // Ping endpoint
     if (pathname === "/api/ping") {
       return new Response(JSON.stringify({ message: "pong" }), {
         headers: { "Content-Type": "application/json" },
