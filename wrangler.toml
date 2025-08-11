@@ -1,5 +1,5 @@
-name = "clipcherry-worker"
-account_id = "YOUR_CF_ACCOUNT_ID"
+name = "clipcherryproject"
+account_id = "9748736d8674bad21f5e685fa96db7cd"
 compatibility_date = "2025-08-11"
 main = "src/index.ts"
 
