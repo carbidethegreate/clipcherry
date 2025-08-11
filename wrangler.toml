@@ -1,0 +1,13 @@
+name = "clipcherry-worker"
+account_id = "YOUR_CF_ACCOUNT_ID"
+compatibility_date = "2025-08-11"
+main = "src/index.ts"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "7db6ae86715f404ab74233d7db1fd949"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "clipcherry_db"
+database_id = "cb83634a-6db1-4dd4-9d1e-530ba88ac407"
