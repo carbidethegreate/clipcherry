@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CLIPcherry - Dashboard</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <h1>CLIPcherry Dashboard</h1>
+  <button id="logout">Logout</button>
+</header>
+<main>
+  <section id="contentList">
+    <h2>Available Content</h2>
+    <ul id="contentItems"></ul>
+  </section>
+  <section id="subscriptions">
+    <h2>My Subscriptions</h2>
+    <ul id="subscriptionList"></ul>
+  </section>
+</main>
+<script>
+async function load() {
+  const token = localStorage.getItem('sessionToken');
+  if (!token) {
+    window.location.href = '/public/login.html';
+    return;
+  }
+  const headers = { 'Authorization': 'Bearer ' + token };
+  try {
+    const contentRes = await fetch('/api/content', { headers });
+    const contentData = await contentRes.json();
+    const ul = document.getElementById('contentItems');
+    contentData.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.title} - $${(item.price_cents / 100).toFixed(2)}`;
+      ul.appendChild(li);
+    });
+    const subRes = await fetch('/api/subscriptions', { headers });
+    const subData = await subRes.json();
+    const subUl = document.getElementById('subscriptionList');
+    subData.forEach(sub => {
+      const li = document.createElement('li');
+      li.textContent = sub.creator_username || sub.creator_id;
+      subUl.appendChild(li);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+document.getElementById('logout').addEventListener('click', () => {
+  localStorage.removeItem('sessionToken');
+  window.location.href = '/public/login.html';
+});
+load();
+</script>
+</body>
+</html>
