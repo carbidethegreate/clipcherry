@@ -69,7 +69,15 @@ async function handler(request: Request, env: Env): Promise<Response> {
     return createContent(request, env);
   }
   if (pathname === '/api/my-content' && request.method === 'GET') {
-    return listMyContent(request, env);
+    r
+          if (pathname === '/api/purchase' && request.method === 'POST') {
+      return createPurchase(request, env);
+    }
+    if (pathname.startsWith('/api/purchase/') && request.method === 'GET') {
+      const id = pathname.split('/')[3];
+      return getPurchaseStatus(request, env, id);
+    }
+eturn listMyContent(request, env);
   }
   if (pathname === '/api/subscriptions' && request.method === 'POST') {
     return createSubscription(request, env);
@@ -147,7 +155,61 @@ async function createSubscription(request: Request, env: Env): Promise<Response>
 async function listSubscriptions(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
   if (!userId) {
+    r
+      
+    // Create a new purchase order for content
+async function createPurchase(request: Request, env: Env): Promise<Response> {
+  const userId = await getAuthenticatedUserId(request, env);
+  if (!userId) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+  }
+  const body = await parseBody(request);
+  const { content_id, currency } = body || {};
+  if (!content_id || !currency) {
+    return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+  }
+  // fetch content
+  const content = await env.DB.prepare('SELECT id, creator_id, price_cents FROM content WHERE id = ?').bind(content_id).first();
+  if (!content) {
+    return new Response(JSON.stringify({ error: 'Content not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
+  }
+  // compute price; for simplicity price_cents is in USD cents; we just return that; conversion to BTC/XRP not implemented
+  const priceCents = (content as any).price_cents as number;
+  // Generate crypto payment details
+  let address: string = '';
+  let destinationTag: string | undefined;
+  if (currency === 'BTC') {
+    address = await deriveBTCAddress(userId.toString());
+  } else if (currency === 'XRP') {
+    address = 'YOUR_XRP_ACCOUNT_ADDRESS';
+    destinationTag = generateXRPDestinationTag();
+  } else {
+    return new Response(JSON.stringify({ error: 'Unsupported currency' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+  }
+  // Insert purchase record
+  const { success } = await env.DB.prepare(
+    'INSERT INTO purchases (user_id, content_id, currency, price_cents, status, address, destination_tag, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+  ).bind(userId, content_id, currency, priceCents, 'pending', address, destinationTag || null, getCurrentTimestamp()).run();
+  // Get order ID (last inserted rowid)
+  const orderId = (await env.DB.prepare('SELECT last_insert_rowid() as id').first()) as any;
+  return new Response(JSON.stringify({
+    order_id: orderId.id,
+    address,
+    destinationTag,
+    amount_cents: priceCents,
+    currency
+  }), { headers: { 'Content-Type': 'application/json' } });
+}
+
+// Check purchase status
+async function getPurchaseStatus(request: Request, env: Env, id: string): Promise<Response> {
+  const purchase = await env.DB.prepare('SELECT id, status, currency, price_cents, address, destination_tag FROM purchases WHERE id = ?').bind(id).first();
+  if (!purchase) {
+    return new Response(JSON.stringify({ error: 'Order not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
+  }
+  return new Response(JSON.stringify(purchase), { headers: { 'Content-Type': 'application/json' } });
+}
+eturn new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
   }
   const results = await env.DB.prepare(
     'SELECT s.id, s.creator_id, u.username as creator_username, s.status, s.started_at FROM subscriptions s JOIN users u ON u.id = s.creator_id WHERE s.user_id = ?'
