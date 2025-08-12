@@ -1,225 +1,293 @@
 import { hashPassword, generateRandomString, getCurrentTimestamp, deriveBTCAddress, generateXRPDestinationTag } from './utils.ts';
 
-
 interface Env {
   DB: D1Database;
   KV: KVNamespace;
 }
 
+// Base URL for raw files in the GitHub repository (for serving static HTML/CSS)
+const GITHUB_BASE_RAW = 'https://raw.githubusercontent.com/carbidethegreate/clipcherry/main';
+
+// Helper to parse JSON body safely
 async function parseBody(request: Request): Promise<any> {
-  const contentType = request.headers.get('Content-Type') || '';
-  if (contentType.includes('application/json')) {
+  try {
     return await request.json();
+  } catch {
+    return {};
   }
-  return null;
 }
 
-async function register(request: Request, env: Env) {
-  const body = await parseBody(request);
-  const { username, email, password } = body || {};
-  if (!username || !email || !password) {
-    return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-  }
-  const password_hash = await hashPassword(password);
-  await env.DB.prepare(`INSERT INTO users (username,email,password_hash) VALUES (?1,?2,?3)`).bind(username, email, password_hash).run();
-  return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } });
-}
-
-async function login(request: Request, env: Env) {
-  const body = await parseBody(request);
-  const { email, password } = body || {};
-  if (!email || !password) {
-    return new Response(JSON.stringify({ error: 'Missing credentials' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-  }
-  const user = await env.DB.prepare('SELECT id, password_hash FROM users WHERE email=?1').bind(email).first();
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Invalid credentials' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const hashed = await hashPassword(password);
-  if (hashed !== (user as any).password_hash) {
-    return new Response(JSON.stringify({ error: 'Invalid credentials' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const token = generateRandomString(32);
-  await env.KV.put(`session:${token}`, String((user as any).id), { expirationTtl: 60 * 60 * 24 * 7 });
-  return new Response(JSON.stringify({ token }), { headers: { 'Content-Type': 'application/json' } });
-}
-
-async function listContent(request: Request, env: Env) {
-  const results = await env.DB.prepare('SELECT id, title, price_cents, is_private FROM content WHERE is_private = 0').all();
-  return new Response(JSON.stringify(results.results || []), { headers: { 'Content-Type': 'application/json' } });
-}
-
-async function handler(request: Request, env: Env): Promise<Response> {
-  const url = new URL(request.url);
-    if (pathname === '/api/content' && request.method === 'POST') {
-
-  }
-
-  const pathname = url.pathname;
-  if (pathname === '/api/register' && request.method === 'POST') {
-    return register(request, env);
-  }
-  if (pathname === '/api/login' && request.method === 'POST') {
-    return login(request, env);
-  }
-  if (pathname === '/api/content' && request.method === 'GET') {
-    return listContent(request, env);
-  }
-  
-    if (pathname === '/api/content' && request.method === 'POST') {
-    return createContent(request, env);
-  }
-  if (pathname === '/api/my-content' && request.method === 'GET') {
-    r
-          if (pathname === '/api/purchase' && request.method === 'POST') {
-      return createPurchase(request, env);
-    }
-    if (pathname.startsWith('/api/purchase/') && request.method === 'GET') {
-      const id = pathname.split('/')[3];
-      return getPurchaseStatus(request, env, id);
-    }
-eturn listMyContent(request, env);
-  }
-  if (pathname === '/api/subscriptions' && request.method === 'POST') {
-    return createSubscription(request, env);
-  }
-  if (pathname === '/api/subscriptions' && request.method === 'GET') {
-    return listSubscriptions(request, env);
-  }
-// TODO: implement 
-  upload, purchase, subscription, messages, etc.
-  if (pathname.startsWith('/api')) {
-    return new Response(JSON.stringify({ error: 'Not implemented' }), { status: 501, headers: { 'Content-Type': 'application/json' } });
-  }
-  return new Response('CLIPcherry API', { headers: { 'Content-Type': 'text/plain' } });
-// Helper to authenticate user via session token stored in KV
+// Retrieve user ID from session token stored in KV
 async function getAuthenticatedUserId(request: Request, env: Env): Promise<number | null> {
-  const authHeader = request.headers.get('Authorization') || '';
-  // Expect header like "Bearer <token>"
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  if (!token) return null;
-  const session = await env.KV.get(`session:${token}`, { type: 'json' });
-  if (!session || typeof session !== 'object' || !('user' in session)) return null;
-  return (session as any).user as number;
+  const authHeader = request.headers.get('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+  const sessionId = authHeader.slice(7);
+  const userIdStr = await env.KV.get(`session:${sessionId}`);
+  return userIdStr ? Number(userIdStr) : null;
+}
+
+// Serve static files from the GitHub repository
+async function serveStatic(path: string): Promise<Response> {
+  const url = `${GITHUB_BASE_RAW}${path}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    return new Response('Not Found', { status: 404 });
+  }
+  const ext = path.split('.').pop()?.toLowerCase() || '';
+  let contentType = 'text/plain';
+  if (ext === 'html') contentType = 'text/html';
+  else if (ext === 'css') contentType = 'text/css';
+  else if (ext === 'js') contentType = 'application/javascript';
+  const body = await res.text();
+  return new Response(body, { status: 200, headers: { 'Content-Type': contentType } });
+}
+
+// Return JSON response helper
+function jsonResponse(data: any, status: number = 200): Response {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
+// User registration
+async function register(request: Request, env: Env): Promise<Response> {
+  const { username, email, password } = await parseBody(request);
+  if (!username || !email || !password) {
+    return jsonResponse({ error: 'Missing required fields' }, 400);
+  }
+  // Ensure users table exists
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    email TEXT UNIQUE,
+    password_hash TEXT,
+    created_at TEXT
+  );`);
+  // Check for duplicate email
+  const { results: existing } = await env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(email).all();
+  if (existing.length > 0) {
+    return jsonResponse({ error: 'Email already registered' }, 409);
+  }
+  const passwordHash = await hashPassword(password);
+  await env.DB.prepare('INSERT INTO users (username, email, password_hash, created_at) VALUES (?, ?, ?, ?)').bind(username, email, passwordHash, getCurrentTimestamp()).run();
+  return jsonResponse({ success: true });
+}
+
+// User login
+async function login(request: Request, env: Env): Promise<Response> {
+  const { email, password } = await parseBody(request);
+  if (!email || !password) {
+    return jsonResponse({ error: 'Missing credentials' }, 400);
+  }
+  const { results } = await env.DB.prepare('SELECT id, password_hash FROM users WHERE email = ?').bind(email).all();
+  const user = results[0];
+  if (!user) return jsonResponse({ error: 'Invalid credentials' }, 401);
+  const passwordHash = await hashPassword(password);
+  if (passwordHash !== user.password_hash) {
+    return jsonResponse({ error: 'Invalid credentials' }, 401);
+  }
+  const sessionId = generateRandomString(32);
+  await env.KV.put(`session:${sessionId}`, String(user.id), { expirationTtl: 60 * 60 * 24 });
+  return jsonResponse({ session: sessionId });
+}
+
+// List all public content
+async function listContent(env: Env): Promise<Response> {
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS content (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    creator_id INTEGER,
+    title TEXT,
+    description TEXT,
+    price_cents INTEGER,
+    type TEXT,
+    media_id TEXT,
+    preview_id TEXT,
+    is_private INTEGER,
+    created_at TEXT
+  );`);
+  const { results } = await env.DB.prepare('SELECT id, creator_id, title, description, price_cents, type, preview_id, is_private FROM content WHERE is_private = 0').all();
+  return jsonResponse({ items: results });
 }
 
 // Create new content (for creators)
 async function createContent(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  const { title, description, price_cents, type, media_id, preview_id, is_private } = await parseBody(request);
+  if (!title || !description || price_cents === undefined || !type || !media_id) {
+    return jsonResponse({ error: 'Missing content fields' }, 400);
   }
-  const body = await parseBody(request);
-  const { title, description, price_cents, is_private, type, media_url, preview_url } = body || {};
-  if (!title || !type) {
-    return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-  }
-  // Insert into DB
-  await env.DB.prepare(
-    `INSERT INTO content (creator_id, title, description, price_cents, is_private, type, media_url, preview_url, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  ).bind(userId, title, description || '', price_cents || 0, is_private ? 1 : 0, type, media_url || '', preview_url || '', getCurrentTimestamp()).run();
-  return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } });
+  await env.DB.prepare('INSERT INTO content (creator_id, title, description, price_cents, type, media_id, preview_id, is_private, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(userId, title, description, price_cents, type, media_id, preview_id || null, is_private ? 1 : 0, getCurrentTimestamp())
+    .run();
+  return jsonResponse({ success: true });
 }
 
-// List content for current creator
+// List content uploaded by the authenticated creator
 async function listMyContent(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const results = await env.DB.prepare(
-    'SELECT id, title, price_cents, is_private, type, media_url, preview_url FROM content WHERE creator_id = ?'
-  ).bind(userId).all();
-  return new Response(JSON.stringify(results.results ?? []), { headers: { 'Content-Type': 'application/json' } });
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS content (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    creator_id INTEGER,
+    title TEXT,
+    description TEXT,
+    price_cents INTEGER,
+    type TEXT,
+    media_id TEXT,
+    preview_id TEXT,
+    is_private INTEGER,
+    created_at TEXT
+  );`);
+  const { results } = await env.DB.prepare('SELECT id, title, description, price_cents, type, preview_id, is_private FROM content WHERE creator_id = ?')
+    .bind(userId)
+    .all();
+  return jsonResponse({ items: results });
 }
 
 // Subscribe to a creator
 async function createSubscription(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const body = await parseBody(request);
-  const { creator_id } = body || {};
-  if (!creator_id) {
-    return new Response(JSON.stringify({ error: 'Missing creator_id' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-  }
-  // Insert subscription if not exists
-  await env.DB.prepare(
-    'INSERT OR IGNORE INTO subscriptions (user_id, creator_id, status, started_at) VALUES (?, ?, ?, ?)'
-  ).bind(userId, creator_id, 'active', getCurrentTimestamp()).run();
-  return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } });
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  const { creator_id } = await parseBody(request);
+  if (!creator_id) return jsonResponse({ error: 'Missing creator_id' }, 400);
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS subscriptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    creator_id INTEGER,
+    started_at TEXT
+  );`);
+  await env.DB.prepare('INSERT INTO subscriptions (user_id, creator_id, started_at) VALUES (?, ?, ?)')
+    .bind(userId, creator_id, getCurrentTimestamp())
+    .run();
+  return jsonResponse({ success: true });
 }
 
-// List subscriptions for current user
+// List all subscriptions for the authenticated user
 async function listSubscriptions(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
-  if (!userId) {
-    r
-      
-    // Create a new purchase order for content
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS subscriptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    creator_id INTEGER,
+    started_at TEXT
+  );`);
+  const { results } = await env.DB.prepare('SELECT creator_id FROM subscriptions WHERE user_id = ?')
+    .bind(userId)
+    .all();
+  return jsonResponse({ subscriptions: results });
+}
+
+// Create a new purchase order for content
 async function createPurchase(request: Request, env: Env): Promise<Response> {
   const userId = await getAuthenticatedUserId(request, env);
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const body = await parseBody(request);
-  const { content_id, currency } = body || {};
-  if (!content_id || !currency) {
-    return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-  }
-  // fetch content
-  const content = await env.DB.prepare('SELECT id, creator_id, price_cents FROM content WHERE id = ?').bind(content_id).first();
-  if (!content) {
-    return new Response(JSON.stringify({ error: 'Content not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
-  }
-  // compute price; for simplicity price_cents is in USD cents; we just return that; conversion to BTC/XRP not implemented
-  const priceCents = (content as any).price_cents as number;
-  // Generate crypto payment details
-  let address: string = '';
-  let destinationTag: string | undefined;
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  const { content_id, currency } = await parseBody(request);
+  if (!content_id || !currency) return jsonResponse({ error: 'Missing fields' }, 400);
+  // Fetch content to get price
+  const { results: contentRows } = await env.DB.prepare('SELECT price_cents FROM content WHERE id = ?').bind(content_id).all();
+  const content = contentRows[0];
+  if (!content) return jsonResponse({ error: 'Content not found' }, 404);
+  const priceCents = content.price_cents;
+  await env.DB.exec(`CREATE TABLE IF NOT EXISTS purchases (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    content_id INTEGER,
+    price_cents INTEGER,
+    currency TEXT,
+    address TEXT,
+    destination_tag TEXT,
+    status TEXT,
+    created_at TEXT
+  );`);
+  let address = '';
+  let destinationTag: string | null = null;
   if (currency === 'BTC') {
-    address = await deriveBTCAddress(userId.toString());
+    address = deriveBTCAddress(`${userId}-${content_id}`);
   } else if (currency === 'XRP') {
     address = 'YOUR_XRP_ACCOUNT_ADDRESS';
     destinationTag = generateXRPDestinationTag();
   } else {
-    return new Response(JSON.stringify({ error: 'Unsupported currency' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    return jsonResponse({ error: 'Unsupported currency' }, 400);
   }
-  // Insert purchase record
-  const { success } = await env.DB.prepare(
-    'INSERT INTO purchases (user_id, content_id, currency, price_cents, status, address, destination_tag, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-  ).bind(userId, content_id, currency, priceCents, 'pending', address, destinationTag || null, getCurrentTimestamp()).run();
-  // Get order ID (last inserted rowid)
-  const orderId = (await env.DB.prepare('SELECT last_insert_rowid() as id').first()) as any;
-  return new Response(JSON.stringify({
-    order_id: orderId.id,
+  const { lastRowId } = await env.DB.prepare('INSERT INTO purchases (user_id, content_id, price_cents, currency, address, destination_tag, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(userId, content_id, priceCents, currency, address, destinationTag, 'pending', getCurrentTimestamp())
+    .run();
+  return jsonResponse({
+    order_id: lastRowId,
     address,
-    destinationTag,
+    destination_tag: destinationTag,
     amount_cents: priceCents,
     currency
-  }), { headers: { 'Content-Type': 'application/json' } });
+  });
 }
 
-// Check purchase status
-async function getPurchaseStatus(request: Request, env: Env, id: string): Promise<Response> {
-  const purchase = await env.DB.prepare('SELECT id, status, currency, price_cents, address, destination_tag FROM purchases WHERE id = ?').bind(id).first();
-  if (!purchase) {
-    return new Response(JSON.stringify({ error: 'Order not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
-  }
-  return new Response(JSON.stringify(purchase), { headers: { 'Content-Type': 'application/json' } });
-}
-eturn new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
-  }
-  const results = await env.DB.prepare(
-    'SELECT s.id, s.creator_id, u.username as creator_username, s.status, s.started_at FROM subscriptions s JOIN users u ON u.id = s.creator_id WHERE s.user_id = ?'
-  ).bind(userId).all();
-  return new Response(JSON.stringify(results.results ?? []), { headers: { 'Content-Type': 'application/json' } });
-}
-
+// Get purchase status
+async function getPurchaseStatus(request: Request, env: Env, id: number): Promise<Response> {
+  const userId = await getAuthenticatedUserId(request, env);
+  if (!userId) return jsonResponse({ error: 'Unauthorized' }, 401);
+  const { results } = await env.DB.prepare('SELECT status, address, destination_tag, price_cents AS amount_cents, currency FROM purchases WHERE id = ? AND user_id = ?')
+    .bind(id, userId)
+    .all();
+  const purchase = results[0];
+  if (!purchase) return jsonResponse({ error: 'Purchase not found' }, 404);
+  return jsonResponse(purchase);
 }
 
 export default {
-  fetch: handler
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    // Serve static pages
+    if (pathname === '/' || pathname === '/index.html' || pathname === '/public/' || pathname === '/public/index.html') {
+      return await serveStatic('/public/index.html');
+    }
+    if (pathname.startsWith('/public/')) {
+      return await serveStatic(pathname);
+    }
+    if (pathname.startsWith('/css/')) {
+      return await serveStatic(pathname);
+    }
+
+    // API routes
+    if (pathname === '/api/register' && request.method === 'POST') {
+      return await register(request, env);
+    }
+    if (pathname === '/api/login' && request.method === 'POST') {
+      return await login(request, env);
+    }
+    if (pathname === '/api/content' && request.method === 'GET') {
+      return await listContent(env);
+    }
+    if (pathname === '/api/content' && request.method === 'POST') {
+      return await createContent(request, env);
+    }
+    if (pathname === '/api/my-content' && request.method === 'GET') {
+      return await listMyContent(request, env);
+    }
+    if (pathname === '/api/subscriptions' && request.method === 'GET') {
+      return await listSubscriptions(request, env);
+    }
+    if (pathname === '/api/subscriptions' && request.method === 'POST') {
+      return await createSubscription(request, env);
+    }
+    if (pathname === '/api/purchase' && request.method === 'POST') {
+      return await createPurchase(request, env);
+    }
+    if (pathname.startsWith('/api/purchase/') && request.method === 'GET') {
+      const idStr = pathname.split('/')[3];
+      const id = Number(idStr);
+      if (!Number.isInteger(id)) {
+        return jsonResponse({ error: 'Invalid order id' }, 400);
+      }
+      return await getPurchaseStatus(request, env, id);
+    }
+
+    return new Response('Not Found', { status: 404 });
+  }
 };
