@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS purchases (
   currency TEXT NOT NULL,
   crypto_address TEXT,
   destination_tag TEXT,
+ CREATE TABLE IF NOT EXISTS content
   tx_hash TEXT,
   status TEXT DEFAULT 'pending',
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
