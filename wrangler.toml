@@ -1,6 +1,7 @@
-name = "clipcherryproject"
-account_id = "9748736d8674bad21f5e685fa96db7cd"
-compatibility_date = "2025-08-11"
+name = "clipcherry-worker"
+account_id = "974873d36d874bad21f5e685fa96db7cd"
+compatibility_date = "2024-08-01"
+compatibility_flags = ["nodejs_compat"]
 main = "src/index.ts"
 
 [[kv_namespaces]]
@@ -11,3 +12,4 @@ id = "7db6ae86715f404ab74233d7db1fd949"
 binding = "DB"
 database_name = "clipcherry_db"
 database_id = "cb83634a-6db1-4dd4-9d1e-530ba88ac407"
+migrations_dir = "schema"
