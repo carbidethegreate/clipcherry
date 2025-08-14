@@ -1,67 +1,157 @@
+/* Unified Clipcherry Styles */
+
 :root {
-  --primary-color: #e30052;
-  --background-color: #f5f5f7;
-  --text-color: #121212;
+  --color-primary: #e30052;
+  --color-background: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-dark-accent: #091e22;
+  --color-success: #42ccbf;
+  --color-warning: #e6cc44;
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
 }
 
 header {
-  padding: 16px;
-  background-color: var(--primary-color);
-  color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: var(--color-surface);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--color-background);
 }
 
-h1, h2 {
-  margin: 0 0 16px 0;
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+nav a {
+  font-weight: 600;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 main {
-  padding: 24px;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--color-surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  color: var(--color-dark-accent);
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-background);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 400px;
+  gap: 1rem;
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"],
-input[type="email"] {
-  padding: 12px;
+textarea {
+  padding: 0.75rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
 }
 
-button {
-  padding: 12px;
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(227, 0, 82, 0.3);
+}
+
+button, .btn {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  background-color: var(--primary-color);
-  color: white;
+  border-radius: 0.5rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-button:hover {
-  opacity: 0.9;
+button:hover,
+.btn:hover {
+  background-color: #c20046;
 }
 
-ul {
+.status-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.status-success {
+  background-color: var(--color-success);
+  color: var(--color-dark-accent);
+}
+
+.status-error {
+  background-color: var(--color-warning);
+  color: var(--color-dark-accent);
+}
+
+ul.content-list,
+ul.subscription-list {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
+  margin-bottom: 1rem;
 }
 
-li {
-  margin-bottom: 8px;
+ul.content-list li,
+ul.subscription-list li {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #777;
 }
